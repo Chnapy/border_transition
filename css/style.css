@@ -1,0 +1,114 @@
+/*! Writted by Richard Haddad https://github.com/Chnapy */
+.border-transition {
+  position: relative;
+  display: inline-block; }
+  .border-transition.bt-stylised {
+    box-shadow: inset 0 0 0 1px #A9A9A9;
+    border: none;
+    background: white; }
+    .border-transition.bt-stylised > .bt-content {
+      background: none;
+      border: 2px solid;
+      border-color: transparent;
+      border-radius: 0;
+      padding: 2px 2px; }
+  .border-transition > .bt-content {
+    position: relative;
+    z-index: 1;
+    vertical-align: top;
+    outline: 0;
+    margin: 0; }
+  .border-transition > .bt-frame {
+    position: absolute;
+    display: inline-block;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; }
+    .border-transition > .bt-frame::before, .border-transition > .bt-frame::after {
+      box-sizing: border-box;
+      content: '';
+      position: absolute;
+      z-index: 1;
+      pointer-events: none; }
+    .border-transition > .bt-frame.bt-animate::before, .border-transition.bt-focus > .bt-content:focus + .bt-frame::before, .border-transition.bt-hover > .bt-content:hover + .bt-frame::before, .border-transition.bt-active > .bt-content:active + .bt-frame::before, .border-transition > .bt-frame.bt-animate::after, .border-transition.bt-focus > .bt-content:focus + .bt-frame::after, .border-transition.bt-hover > .bt-content:hover + .bt-frame::after, .border-transition.bt-active > .bt-content:active + .bt-frame::after {
+      border-color: #e74c3c; }
+
+.bt-draw > .bt-frame {
+  transition: color 0.25s; }
+  .bt-draw > .bt-frame::before, .bt-draw > .bt-frame::after {
+    border: 2px solid transparent;
+    width: 0;
+    height: 0; }
+  .bt-draw > .bt-frame::before {
+    top: 0;
+    left: 0; }
+  .bt-draw > .bt-frame::after {
+    bottom: 0;
+    right: 0; }
+  .bt-draw > .bt-frame.bt-animate::before, .border-transition.bt-focus.bt-draw > .bt-content:focus + .bt-frame::before, .border-transition.bt-hover.bt-draw > .bt-content:hover + .bt-frame::before, .border-transition.bt-active.bt-draw > .bt-content:active + .bt-frame::before, .bt-draw > .bt-frame.bt-animate::after, .border-transition.bt-focus.bt-draw > .bt-content:focus + .bt-frame::after, .border-transition.bt-hover.bt-draw > .bt-content:hover + .bt-frame::after, .border-transition.bt-active.bt-draw > .bt-content:active + .bt-frame::after {
+    width: 100%;
+    height: 100%; }
+  .bt-draw > .bt-frame.bt-animate::before, .border-transition.bt-focus.bt-draw > .bt-content:focus + .bt-frame::before, .border-transition.bt-hover.bt-draw > .bt-content:hover + .bt-frame::before, .border-transition.bt-active.bt-draw > .bt-content:active + .bt-frame::before {
+    border-bottom-color: transparent !important;
+    border-left-color: transparent !important;
+    transition: width 0.25s ease-out, height 0.25s ease-out 0.25s; }
+  .bt-draw > .bt-frame.bt-animate::after, .border-transition.bt-focus.bt-draw > .bt-content:focus + .bt-frame::after, .border-transition.bt-hover.bt-draw > .bt-content:hover + .bt-frame::after, .border-transition.bt-active.bt-draw > .bt-content:active + .bt-frame::after {
+    border-top-color: transparent !important;
+    border-right-color: transparent !important;
+    transition: border-color 0s ease-out 0.5s, width 0.25s ease-out 0.5s, height 0.25s ease-out 0.75s; }
+
+.bt-draw.bt-opposite > .bt-frame.bt-animate::after, .border-transition.bt-focus.bt-draw.bt-opposite > .bt-content:focus + .bt-frame::after, .border-transition.bt-hover.bt-draw.bt-opposite > .bt-content:hover + .bt-frame::after, .border-transition.bt-active.bt-draw.bt-opposite > .bt-content:active + .bt-frame::after {
+  transition: width 0.25s ease-out 0s, height 0.25s ease-out 0.25s; }
+
+.bt-draw.bt-meet > .bt-frame::after {
+  top: 0;
+  left: 0; }
+.bt-draw.bt-meet > .bt-frame.bt-animate::after, .border-transition.bt-focus.bt-draw.bt-meet > .bt-content:focus + .bt-frame::after, .border-transition.bt-hover.bt-draw.bt-meet > .bt-content:hover + .bt-frame::after, .border-transition.bt-active.bt-draw.bt-meet > .bt-content:active + .bt-frame::after {
+  transition: height 0.25s ease-out, width 0.25s ease-out 0.25s; }
+
+.bt-center > .bt-frame::before, .bt-center > .bt-frame::after {
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transform-origin: center; }
+.bt-center > .bt-frame.bt-animate::before, .border-transition.bt-focus.bt-center > .bt-content:focus + .bt-frame::before, .border-transition.bt-hover.bt-center > .bt-content:hover + .bt-frame::before, .border-transition.bt-active.bt-center > .bt-content:active + .bt-frame::before, .bt-center > .bt-frame.bt-animate::after, .border-transition.bt-focus.bt-center > .bt-content:focus + .bt-frame::after, .border-transition.bt-hover.bt-center > .bt-content:hover + .bt-frame::after, .border-transition.bt-active.bt-center > .bt-content:active + .bt-frame::after {
+  transform: scale3d(1, 1, 1);
+  transition: transform 0.5s; }
+.bt-center > .bt-frame::before {
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  transform: scale3d(0, 1, 1); }
+.bt-center > .bt-frame::after {
+  border-left: 2px solid;
+  border-right: 2px solid;
+  transform: scale3d(1, 0, 1); }
+
+/**
+ * 
+ * Sample of how to override border-color (and others).
+ */
+/*
+.border-transition {
+	
+	&>.bt-content:active + .bt-frame {
+			&::before, &::after {
+				border-color: green !important;
+			}
+	}
+	&>.bt-content:focus + .bt-frame {
+			&::before, &::after {
+				border-color: green !important;
+			}
+	}
+	&>.bt-content:hover + .bt-frame {
+			&::before, &::after {
+				border-color: green !important;
+			}
+	}
+}
+*/
+
+/*# sourceMappingURL=style.css.map */

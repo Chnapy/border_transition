@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--
+
+Sample HTML file
+
+-->
+<html>
+	<head>
+		<title>Border Transition - Sample</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- Example CSS -->
+		<link rel="stylesheet" href="css/style.css"/>
+	</head>
+	<body>
+
+			<span class="border-transition bt-focus bt-draw">
+				<input class="bt-content" type="text"/>
+				<span class="bt-frame"></span>
+			</span>
+
+			<span class="border-transition bt-hover bt-focus bt-draw bt-meet">
+				<input class="bt-content" type="text"/>
+				<span class="bt-frame"></span>
+			</span>
+
+			<span class="border-transition bt-active bt-draw bt-opposite">
+				<input class="bt-content" type="text"/>
+				<span class="bt-frame"></span>
+			</span>
+
+			<span class="border-transition bt-active bt-center">
+				<input class="bt-content" type="text"/>
+				<span class="bt-frame"></span>
+			</span>
+
+			<span class="border-transition bt-focus bt-center">
+				<textarea class="bt-content">Textarea</textarea>
+				<span class="bt-frame"></span>
+			</span>
+
+			<span class="border-transition bt-focus bt-draw bt-stylised">
+				<button class="bt-content">
+					Button
+				</button>
+				<span class="bt-frame"></span>
+			</span>
+
+			<span class="border-transition bt-focus bt-draw">
+				<input class="bt-content" type="submit"/>
+				<span class="bt-frame"></span>
+			</span>
+
+			<span class="border-transition bt-active bt-center">
+				<img src="" alt="tototo" class="bt-content"/>
+				<span class="bt-frame"></span>
+			</span>
+
+			<div class="border-transition bt-active bt-center">
+				<div class="bt-content">
+					<img src="" alt="tototo"/>
+					<input type='text'/>
+					<input type='submit'/>
+				</div>
+				<span class="bt-frame"></span>
+			</div>
+
+			<span class="border-transition">
+				<input type="text"/>
+			</span>
+
+		<!-- JQuery -->
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+		
+		<!-- The library -->
+		<script src="js/border_transition.js"></script>
+
+		<!-- Example JS -->
+		<script src="js/example.js"></script>
+	</body>
+</html>

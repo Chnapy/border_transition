@@ -1,0 +1,248 @@
+
+
+/*! Writted by Richard Haddad https://github.com/Chnapy */
+
+@function getVariableColor() {
+	@if not variable-exists(border-transition-color) {
+		@return #e74c3c;
+	}
+	@return $border-transition-color;
+}
+
+@function getVariableDuration() {
+	@if not variable-exists(border-transition-duration) {
+		@return 0.25s;
+	}
+	@return $border-transition-duration;
+}
+
+@function getVariableTimingFunction() {
+	@if not variable-exists(border-transition-timing-function) {
+		@return  ease-out;
+	}
+	@return $border-transition-timing-function;
+}
+
+@function getVariableStylised() {
+	@if not variable-exists(border-transition-stylised) {
+		@return false;
+	}
+	@return $border-transition-stylised;
+}
+
+//Variables, if not defined -> you have to, it's better, trust me :)
+//Define default values
+$border-transition-color: getVariableColor();
+$border-transition-duration: getVariableDuration();
+$border-transition-timing-function: getVariableTimingFunction();
+$border-transition-stylised: getVariableStylised();
+
+.border-transition {
+	position: relative;
+	display: inline-block;
+
+	@if ($border-transition-stylised) {
+		@extend .bt-stylised;
+	}
+
+	&.bt-stylised {
+		box-shadow: inset 0 0 0 1px #A9A9A9;
+		border: none;
+		background: white;
+
+		&>.bt-content {
+			background: none;
+			border: 2px solid;
+			border-color: transparent;
+			border-radius: 0;
+
+			padding: 2px 2px;
+		}
+	}
+
+	&>.bt-content {
+		position: relative;
+		z-index: 1;
+		vertical-align: top;
+
+		outline: 0;
+		margin: 0;
+	}
+
+	&.bt-focus>.bt-content:focus + .bt-frame {
+		@extend .bt-animate;
+	}
+
+	&.bt-hover>.bt-content:hover + .bt-frame {
+		@extend .bt-animate;
+	}
+
+	&.bt-active>.bt-content:active + .bt-frame {
+		@extend .bt-animate;
+	}
+
+	&>.bt-frame {
+		position: absolute;
+		display: inline-block;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+
+		&::before, &::after {
+			box-sizing: border-box;
+			content: '';
+			position: absolute;
+			z-index: 1;
+			pointer-events: none;
+		}
+
+		&.bt-animate {
+			&::before, &::after {
+				border-color: $border-transition-color; // Make borders visible
+			}
+		}
+	}
+}
+
+.bt-draw>.bt-frame {
+    transition: color $border-transition-duration;
+
+	&::before, &::after {
+		border: 2px solid transparent;
+		width: 0;
+		height: 0;
+	}
+
+	&::before {
+		top: 0;
+		left: 0;
+	}
+
+	&::after {
+		bottom: 0;
+		right: 0;
+	}
+
+	&.bt-animate {
+
+		&::before, &::after {
+			width: 100%;
+			height: 100%;
+		}
+
+		&::before {
+			border-bottom-color: transparent !important;
+			border-left-color: transparent !important;
+			transition:
+				width $border-transition-duration $border-transition-timing-function, // Width expands first
+				height $border-transition-duration $border-transition-timing-function $border-transition-duration; // And then height
+		}
+
+		&::after {
+			border-top-color: transparent !important;
+			border-right-color: transparent !important;
+			transition:
+				border-color 0s $border-transition-timing-function $border-transition-duration*2, // Wait for ::before to finish before showing border
+				width $border-transition-duration $border-transition-timing-function $border-transition-duration*2, // And then exanding width
+				height $border-transition-duration $border-transition-timing-function $border-transition-duration*3; // And finally height
+		}
+	}
+}
+
+// Inherits from .draw
+.bt-draw.bt-opposite>.bt-frame {
+
+	&.bt-animate {
+
+		//Colors already defined by .border-draw.animate
+
+		&::after {
+			transition:
+				width $border-transition-duration $border-transition-timing-function 0s, // And then exanding width
+				height $border-transition-duration $border-transition-timing-function $border-transition-duration; // And finally height
+		}
+	}
+}
+
+// Inherits from .draw
+.bt-draw.bt-meet>.bt-frame {
+
+	// Start ::after in same position as ::before
+	&::after {
+		top: 0;
+		left: 0;
+	}
+
+	&.bt-animate {
+
+		//Colors already defined by .border-draw.animate
+
+		&::after {
+			transition: // Animate height first, then width
+				height $border-transition-duration $border-transition-timing-function,
+				width $border-transition-duration $border-transition-timing-function $border-transition-duration;
+		}
+	}
+}
+
+// Does not inherit
+.bt-center>.bt-frame {
+
+	// Set up base styles, we're going to scale instead of animating width/height
+	&::before, &::after {
+		top: 0;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		transform-origin: center; // Ensure scaling is done from the center (expands outwards)
+	}
+
+	&.bt-animate {
+
+		&::before, &::after {
+			transform: scale3d(1,1,1); // Show full-size
+			transition: transform $border-transition-duration*2;
+		}
+	}
+
+	// scale3d(<scale-horizontal>, <scale-vertical>, <scale-depth>);
+	&::before {
+		border-top: 2px solid ;
+		border-bottom: 2px solid ;
+		transform: scale3d(0,1,1); // Shrink only width
+	}
+
+	&::after {
+		border-left: 2px solid ;
+		border-right: 2px solid ;
+		transform: scale3d(1,0,1); // Shrink only height
+	}
+
+}
+
+/**
+ * 
+ * Sample of how to override border-color (and others).
+ */
+/*
+.border-transition {
+	
+	&>.bt-content:active + .bt-frame {
+			&::before, &::after {
+				border-color: green !important;
+			}
+	}
+	&>.bt-content:focus + .bt-frame {
+			&::before, &::after {
+				border-color: green !important;
+			}
+	}
+	&>.bt-content:hover + .bt-frame {
+			&::before, &::after {
+				border-color: green !important;
+			}
+	}
+}
+*/
